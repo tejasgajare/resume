@@ -1,0 +1,150 @@
+%-------------------------
+% Resume in LaTeX
+% Author: Tejas Gajare
+%-------------------------
+
+\documentclass[letterpaper,10.5pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=0.55in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tabularx}
+
+% Colors
+\definecolor{linkblue}{HTML}{0066CC}
+
+% Hyperlinks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=linkblue,
+    urlcolor=linkblue,
+    pdfborderstyle={/S/U/W 1}
+}
+
+% Section formatting
+\titleformat{\section}{\large\bfseries\scshape}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{6pt}{4pt}
+
+% Remove page numbers
+\pagestyle{empty}
+
+% Custom commands
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}
+  \begin{tabularx}{\textwidth}{X r}
+    \textbf{#1}, \textit{#2} & \textit{#3} \\
+    & \textit{\small #4}
+  \end{tabularx}
+  \vspace{-5pt}
+}
+
+\newcommand{\resumeSubheadingSimple}[3]{
+  \vspace{-1pt}
+  \begin{tabularx}{\textwidth}{X r}
+    \textbf{#1}, \textit{#2} & \textit{#3} \\
+  \end{tabularx}
+  \vspace{-5pt}
+}
+
+\newcommand{\projectHeading}[2]{
+  \vspace{-1pt}
+  \begin{tabularx}{\textwidth}{X r}
+    \textbf{#1} & \textit{\small #2} \\
+  \end{tabularx}
+  \vspace{-5pt}
+}
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+  {\LARGE \textbf{Tejas Gajare}} \\[4pt]
+  San Mateo, CA \enspace$|$\enspace (315) 418-9936 \enspace$|$\enspace
+  \href{mailto:gajaretejas@gmail.com}{gajaretejas@gmail.com} \enspace$|$\enspace
+  \href{https://linkedin.com/in/tejasgajare}{linkedin.com/in/tejasgajare} \enspace$|$\enspace
+  \href{https://www.tejasgajare.com}{tejasgajare.com}
+\end{center}
+
+%-----------SKILLS-----------
+\section{Skills}
+\begin{itemize}[leftmargin=0.15in, label={}, nosep, itemsep=1pt]
+  \item \textbf{Languages:} Go, Python, C++, Java, SQL, JavaScript, TypeScript, Swift
+  \item \textbf{Backend \& Cloud:} REST APIs, gRPC, Microservices, Kubernetes, Istio, Docker, Consul, AWS (ECS, Fargate, RDS), PagerDuty
+  \item \textbf{Web:} React, Vue.js, HTML/CSS, Angular
+  \item \textbf{Frameworks \& Tools:} Spring Boot, Django, Flask, Git, CI/CD, TensorFlow
+  \item \textbf{Databases:} PostgreSQL, MongoDB, Microsoft SQL Server, SQLite, Firebase
+\end{itemize}
+
+%-----------EXPERIENCE-----------
+\section{Work Experience}
+
+\resumeSubheading
+  {Hewlett Packard Enterprise}{Cloud Developer III}{San Jose, CA}{July 2023 -- Present}
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=2pt, topsep=3pt]
+  \item Architected and implemented a multi-tenant \textbf{Case Creation system} with workspace-based tenant isolation, addressing security-critical workflows including cross-tenant access prevention, server-side input validation, and file upload sanitization
+  \item Designed and built \textbf{v3 Wellness Producer APIs} with token-based auth middleware, Istio service mesh configuration, and workspace-based tenant isolation for the HPE GreenLake Cloud Platform
+  \item Developed a \textbf{Go-based download middleware} for enforcing global trade compliance on software downloads, integrating IP-geolocation and account validation with SQLite caching to reduce redundant API calls by 60\%+
+  \item Built \textbf{Rave Monitoring} cloud alerting system tracking service health, case creation pipelines, and CRM failures with automated Slack and PagerDuty notifications for production incident response
+  \item Implemented CRM relay attachment retry logic for handling race conditions where attachments arrive before case number assignment
+  \item Managed production \textbf{Kubernetes cluster operations} including custom service account provisioning, Istio configuration, and deployment pipelines
+\end{itemize}
+
+\resumeSubheadingSimple
+  {Hewlett Packard Enterprise}{Software Engineer Intern}{May 2022 -- August 2022}
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=2pt, topsep=3pt]
+  \item Enhanced customer-facing Go-based REST APIs to HPE internal standards, improving interoperability across microservices and accelerating user adoption
+  \item Modularized CI/CD pipeline for the HPE Rave platform, reducing build and deployment time by 96\% (to under 2 minutes)
+\end{itemize}
+
+\resumeSubheading
+  {Grouped}{Full Stack Developer}{Syracuse, NY}{January 2022 -- April 2022}
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=2pt, topsep=3pt]
+  \item Led development of core microservices and cloud infrastructure for a social media platform
+  \item Designed three-tier, multi-AZ infrastructure running Spring Boot and Flask microservices on AWS ECS with 5 horizontally scaled Fargate instances behind a load balancer
+  \item Utilized server-side rendering to decrease page load time by 35\%
+\end{itemize}
+
+\resumeSubheading
+  {Yardi}{Software Engineer}{Pune, India}{August 2019 -- April 2021}
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=2pt, topsep=3pt]
+  \item Designed CCPA \& GDPR compliance data scrubbing tool handling complex hierarchical database relationships using T-SQL; added feature to identify sensitive fields, reducing field selection time by 50\%
+  \item Developed Harbor Management System using ASP.NET and Microsoft SQL Server for lease tracking via dashboard
+\end{itemize}
+
+%-----------PROJECTS-----------
+\section{Projects}
+
+\projectHeading{Crono --- Time Series Vector Database}{Go}
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=2pt, topsep=3pt]
+  \item Building a time series database in Go with custom storage engine, vector indexing, state management, and REST API layer
+  \item Designed modular architecture with separate packages for API server, indexing, state management, storage engine, and vector operations
+\end{itemize}
+
+\projectHeading{Kairo --- macOS Menu Bar Calendar}{Swift, SwiftUI}
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=2pt, topsep=3pt]
+  \item Built a native macOS menu bar calendar widget using SwiftUI with EventKit integration and real-time weather display via Open-Meteo API
+  \item Implemented clean MVVM architecture with dedicated service and model layers for calendar events and weather data
+\end{itemize}
+
+%-----------EDUCATION-----------
+\section{Education}
+
+\resumeSubheadingSimple
+  {Syracuse University --- College of Engineering \& Computer Science}{M.S. Computer Science}{Aug 2021 -- May 2023}
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=2pt, topsep=3pt]
+  \item Coursework: Natural Language Processing, Data Mining, Cryptography, Blockchain, Design and Analysis of Algorithms
+\end{itemize}
+
+\resumeSubheadingSimple
+  {Savitribai Phule Pune University}{B.E. Computer Engineering}{May 2015 -- May 2019}
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=2pt, topsep=3pt]
+  \item Finalist, ACM International Collegiate Programming Contest (ICPC) Asia Regionals 2019
+  \item Ranked 6th nationally in ABU Robocon 2017
+\end{itemize}
+
+\end{document}
