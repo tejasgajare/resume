@@ -288,6 +288,41 @@ Status updates happen atomically on the wellness object document.
 
 ---
 
+### Recent Contributions (March 2026)
+
+**JWT Issuer Validation Security Fix**
+- Discovered vulnerability: JWKS cache keyed only by `kid`, not issuer
+- A token from a disallowed issuer could pass validation if its `kid` was already cached from an allowed issuer  
+- The auth middleware only checked issuer allow-list on JWKS cache miss and cached keys globally by `kid`
+- Fix: validate issuer BEFORE any cache lookup, scope JWKS cache entries by issuer+kid pair
+- Updated `ALLOWED_ISSUER_BASE_URLS` enforcement to use normalized HTTPS base URL prefixes
+
+**Case Creation Performance Investigation (GLCP-325825)**
+- Investigated P90 degradation: 8.8s (1 user) → 41.3s (10 concurrent users)
+- 30-day log analysis from rave-stage with stage-by-stage breakdown
+- WellnessProducer: 24ms avg (<1% of E2E time)
+- Kafka transit: 657ms avg
+- WellnessManagement: dominant bottleneck
+- Implemented Kafka partition distribution using updatedMetadata.UUID as key
+- Added nil guards and pipeline timing logs
+
+**Kafka Partition Distribution for crmRelay Scaling (GLCP-325825)**
+- Messages were funneling to single partition — no parallelism for crmRelay consumers
+- Used updatedMetadata.UUID as attachment Kafka key for even distribution
+- Added nil guard for WellnessProducer fp in sendToWellness pipeline
+- Fixed missing CRMfp.Finish() call
+
+**Unit Test Coverage Push**
+- Pushed wellnessManagement: 76% → 80%, healthchecker: 73% → 80%
+- Added tests for: processWellnessEvent, createCrmCase, updateWellnessStatus, prepareWellnessEvent
+- healthchecker: SetCaseType, SetRunning, IsRunning, GetThrottleQuota, LoadPlugins error paths
+
+**Case Throttling Alerts (GLCP-330413)**
+- Replaced WellnessManagementRateLimitExceeded with actionable alerts
+- Applied clamp_min, 24h offset, >= to > comparison fixes
+
+---
+
 ## [KEY_POINTS]
 
 - WellnessProducer is the API gateway — every wellness object enters through it

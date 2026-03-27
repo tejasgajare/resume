@@ -316,6 +316,18 @@ to Confluence for cross-team reference.
           Infrastructure (GLCP-325064)
 2025 H1:  Case Enhancements (GLCP-332469, GLCP-334927) + API (GLCP-336767)
           GTCaaS MaxMind migration planning
+2026 Q1:  Performance Investigation (GLCP-325825) — Case creation P90 degradation
+          Kafka Partition Scaling (GLCP-325825) — crmRelay horizontal scaling
+          Office XML Validation (GLCP-340302, GLCP-339197) — .xlsx/.docx/.pptx fix
+          Prometheus Metrics (GLCP-331718) — crmService instrumentation
+          Case Throttling Alerts (GLCP-330413) — Actionable alert replacement
+          OpenAPI Spec Update (GLCP-335836) — Wellness API v2 spec
+          MetricCollector Removal (GLCP-335930) — Deprecated component cleanup
+          Test Coverage Push — wellnessManagement 76→80%, healthchecker 73→80%
+          JWT Issuer Validation Fix — JWKS cache scoping by issuer+kid
+          v2beta1 glp:manual Exclusion — DB-level origin filter
+          OData in Operator — caseNumber multi-ID filter
+          Docker Compose Consolidation — Unified local dev environment
 ```
 <!-- TODO: Verify timeline accuracy against actual sprint dates -->
 
@@ -338,7 +350,7 @@ Looking across all 50+ stories, several patterns emerge:
 
 ---
 
-*Last updated: 2025*
+*Last updated: 2026-03-27*
 *Source: Knowledge graph (jira-bulk), Jira project GLCP, codebase analysis*
 *Note: Story descriptions are based on knowledge graph memories and may be approximate.
 Refer to actual Jira tickets for authoritative details.*

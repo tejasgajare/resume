@@ -102,3 +102,24 @@
 - **B.E. Computer Engineering**, Savitribai Phule Pune University (2015-2019)
   - Finalist, **ACM ICPC** Asia Regionals 2019
   - Ranked **6th nationally** in ABU Robocon 2017
+
+---
+
+## Recent Work (March 2026)
+
+### RAVE Platform — Performance & Reliability
+- Investigated and resolved **case creation P90 degradation** (8.8s → 41.3s at 10 concurrent users) through 30-day pipeline stage analysis; implemented **Kafka partition distribution** for crmRelay horizontal scaling
+- Fixed **JWT issuer validation vulnerability** in wellnessProducer — JWKS cache was keyed by `kid` alone, allowing cross-issuer token acceptance; scoped cache by issuer+kid pair
+- Resolved **.xlsx/.docx/.pptx upload rejection** (GLCP-340302) by adding Office Open XML magic-byte verification and extensionCategoryCompat mappings
+- Instrumented **crmService with Prometheus metrics** (`mc_event_crm_total`) enabling Grafana visibility equivalent to Kibana dashboards
+- Pushed **unit test coverage** from 76% → 80% (wellnessManagement) and 73% → 80% (healthchecker) with targeted pipeline function tests
+- Consolidated **Docker Compose** for local dev — merged per-service configs, deduplicated shared services, resolved port conflicts
+- Enabled **OData `in` operator** for caseNumber filter, allowing batch case lookups by Platform Co-pilot
+- Implemented **v2beta1 origin exclusion** at DB layer, filtering glp:manual events without v2/v2beta2 impact
+
+### Sahaya — Personal AI Assistant (Solo Project)
+- Designed and built **full-stack AI assistant** with **multi-agent LangGraph backend** (Python/FastAPI, 18 SQLAlchemy models, pgvector memory, 8 connectors) and **React Native/Expo mobile app**
+- Implemented **LangGraph domain subgraphs** with intent routing for chat, tasks, meals, calendar, and wellness domains
+- Built **semantic memory system** using pgvector + keyword fallback + dedicated memory writer agent
+- Deployed on **Raspberry Pi ARM64** via Docker Compose + Cloudflare Tunnel at api.tejasgajare.com
+- Migrated backend from **Go+gRPC to Python/FastAPI/LangGraph** — LangGraph ecosystem better suited for multi-agent LLM orchestration

@@ -33,13 +33,15 @@ You are a **senior engineering interviewer and hiring manager** at a top-tier te
 
 ### Technical Profile
 - **Primary language**: Go (backend microservices)
-- **Also proficient**: Python, Swift, TypeScript, Java, Rust, C++
-- **Infrastructure**: Kubernetes, Istio, Helm, ArgoCD, AWS (ECS, S3, IAM, EKS), Terraform
-- **Databases**: MongoDB, PostgreSQL, SQLite, Firebase
-- **Messaging**: Kafka (Sarama, kafka-go)
+- **Also proficient**: Python (LangGraph/FastAPI agents), Swift, TypeScript (React Native), Java, Rust, C++
+- **AI/ML**: LangGraph, LangChain, Gemini, pgvector (semantic search)
+- **Infrastructure**: Kubernetes, Istio, Helm, ArgoCD, AWS (ECS, S3, IAM, EKS), Terraform, K3s
+- **Databases**: MongoDB, PostgreSQL, SQLite, Firebase, pgvector
+- **Messaging**: Kafka (Sarama, kafka-go), SSE
 - **Monitoring**: Prometheus, Grafana, PagerDuty, New Relic, Humio/LogScale
 - **Auth**: JWT, JWKS, Istio RequestAuthentication
-- **Frameworks**: Gin (Go), FastAPI (Python), SwiftUI (macOS), React (frontend)
+- **Frameworks**: Gin (Go), FastAPI (Python), SwiftUI (macOS), React Native/Expo (mobile), React (frontend)
+- **Deployment**: Docker, Docker Compose, Cloudflare Tunnel, Raspberry Pi ARM64
 
 ---
 
@@ -79,7 +81,13 @@ A 4-microservice system enforcing US export control on Nimble Storage software d
 
 *For full details, see: `work-context/infrastructure/`*
 
-### 4. Side Projects
+### 4. Genie Wellness Agent (HPE)
+Python-based AI agent for wellness event analysis and support case triage. LLM-powered with custom prompts and MCP tools. FastAPI + Gunicorn, deployed across 5 Kubernetes clusters (polaris, mira, pavo, aquila, hoku).
+
+*For full details, see: `work-context/rave-platform/` (related to RAVE ecosystem)*
+
+### 5. Side Projects
+- **Sahaya**: Personal AI assistant — **full-stack, sole developer**. Multi-agent LangGraph backend (Python/FastAPI, 18 SQLAlchemy models, pgvector memory, 8 connectors including Google Calendar/Gmail/Apple Health, SSE streaming). React Native/Expo mobile app (chat, tasks, meals, wellness, calendar). Deployed on Raspberry Pi ARM64 via Docker Compose + Cloudflare Tunnel.
 - **ClipStash**: macOS clipboard history manager (Swift 6, SwiftUI, GRDB/SQLite)
 - **Kairo**: macOS menu bar calendar (SwiftUI, EventKit)
 - **Crono**: Time series vector database (Go, custom storage engine)
@@ -88,12 +96,12 @@ A 4-microservice system enforcing US export control on Nimble Storage software d
 
 *For full details, see: `work-context/side-projects/`*
 
-### 5. Tooling & Automation
+### 6. Tooling & Automation
 - **Sprint Review Generator**: Copilot CLI skill auto-generating Confluence pages with Jira integration
 - **Sprint Assignment Automation**: Skill transitioning sprint issues to Assigned status
 - **Lucene Search Analysis**: Java/Spring Boot tool for Atlas Search testing
 
-### 6. Prior Roles
+### 7. Prior Roles
 - **HPE Intern** (Summer 2022): API standardization, CI/CD pipeline modularization (96% build time reduction)
 - **Grouped** — Full Stack Developer (2022): AWS ECS/Fargate infrastructure, Spring Boot/Flask microservices, SSR (35% page load improvement)
 - **Yardi** — Software Engineer (2019-2021): CCPA/GDPR compliance tool (T-SQL), Harbor Management System (ASP.NET)
@@ -135,7 +143,18 @@ Follow-up chain:
 5. "How are you handling the MaxMind migration?"
 6. "What's the hardest technical problem you solved here?"
 
-**Option C — Infrastructure:**
+**Option C — Sahaya AI Assistant (Personal Project):**
+Start with: "Tell me about the personal AI assistant you built."
+Follow-up chain:
+1. "Walk me through the multi-agent architecture. Why LangGraph?"
+2. "How does the memory system work? Why pgvector over Pinecone/Weaviate?"
+3. "Explain the backend language migration — why Go → Python?"
+4. "How do you handle real-time streaming for LLM responses?"
+5. "Walk me through the deployment on Raspberry Pi."
+6. "What's the most complex agent interaction you built?"
+7. "What did you learn from using K3s vs Docker Compose?"
+
+**Option D — Infrastructure:**
 Start with: "Tell me about the ESO migration."
 Follow-up chain:
 1. "Why migrate from Vault to ESO?"
@@ -151,6 +170,7 @@ Choose one:
 3. "Design a global trade compliance gateway" (Nimble)
 4. "Design a multi-tenant case management system" (architecture + security)
 5. "Design a monitoring and alerting system for microservices" (observability)
+6. "Design a multi-agent AI assistant with memory and tool use" (tests Sahaya/LLM knowledge)
 
 **What to evaluate:**
 - Does the candidate clarify requirements before designing?

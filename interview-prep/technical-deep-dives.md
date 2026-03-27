@@ -693,3 +693,89 @@ func (h *Handler) GetCase(c *gin.Context) {
 [SCORING: 1-5]
 - 3: Basic error handling
 - 5: Wrapped errors, sentinel patterns, errors.Is, handler-level error mapping
+
+---
+
+## LangGraph Multi-Agent Architecture
+
+### How LangGraph Works
+
+LangGraph is a framework for building stateful, multi-actor LLM applications as graphs. Each node is an agent or function, edges define transitions, and state flows through the graph.
+
+**Sahaya Architecture:**
+```
+User Message → Intent Router → Domain Subgraph → Response
+                    │
+                    ├── Chat Agent (general conversation)
+                    ├── Task Agent (create/update/list tasks)
+                    ├── Meal Agent (recipes, pantry, meal plans)
+                    ├── Calendar Agent (events, scheduling)
+                    ├── Wellness Agent (health tracking)
+                    └── Memory Writer (background, updates pgvector)
+```
+
+**Key design decisions:**
+1. **Domain subgraphs vs single agent**: Each domain has its own tools and system prompt. Single agent with all tools leads to tool confusion at scale (87+ endpoints). Domain routing keeps each agent focused.
+
+2. **Intent routing**: Lightweight classifier determines which domain handles the message. Falls back to chat agent for ambiguous queries.
+
+3. **State management**: LangGraph checkpointer persists conversation state. Each turn creates a checkpoint that can be resumed.
+
+4. **Human-in-the-loop**: For destructive actions (delete task, cancel event), the graph pauses and waits for user confirmation via SSE.
+
+### Why LangGraph Over Alternatives
+
+| Framework | Pros | Cons | Why not |
+|-----------|------|------|---------|
+| LangGraph | Stateful graphs, checkpointing, human-in-loop native | Python-only | **Chosen** |
+| AutoGen | Multi-agent chat, code execution | Heavy, complex setup | Too much overhead for mobile backend |
+| CrewAI | Simple multi-agent | Less control over routing | Insufficient for domain subgraphs |
+| Raw LangChain | Flexible chains | No built-in multi-agent state | Would need to build graph infra |
+| Custom (Go) | Performance, typing | LLM tooling ecosystem immature | Reason for Go→Python migration |
+
+### SSE Streaming for LLM Responses
+
+```python
+# FastAPI SSE endpoint pattern
+@router.post("/chat/{conversation_id}/messages")
+async def send_message(conversation_id: str, body: MessageCreate):
+    async def event_stream():
+        async for event in orchestrator.stream(conversation_id, body.content):
+            if event.type == "token":
+                yield f"data: {json.dumps({'type': 'token', 'content': event.content})}\n\n"
+            elif event.type == "tool_call":
+                yield f"data: {json.dumps({'type': 'tool', 'name': event.tool})}\n\n"
+            elif event.type == "done":
+                yield f"data: {json.dumps({'type': 'done', 'message_id': event.id})}\n\n"
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
+```
+
+**SSE vs WebSockets**: SSE is unidirectional (server → client) which is perfect for LLM streaming. WebSockets add bidirectional complexity we don't need — user messages go via POST, responses stream via SSE. SSE also reconnects automatically and works through proxies/load balancers more reliably.
+
+### pgvector Memory System
+
+```sql
+-- Vector similarity search with keyword fallback
+SELECT content, 1 - (embedding <=> $1::vector) as similarity
+FROM memories
+WHERE team_id = $2
+  AND (1 - (embedding <=> $1::vector)) > 0.7
+ORDER BY similarity DESC
+LIMIT 5;
+
+-- Fallback: keyword search when vector match is poor
+SELECT content FROM memories
+WHERE team_id = $2
+  AND content ILIKE '%' || $3 || '%'
+ORDER BY created_at DESC
+LIMIT 5;
+```
+
+**Why pgvector over Pinecone/Weaviate**: Single database (Postgres) for both relational data and vectors. No external service dependency. Self-hosted on Pi — can't rely on cloud vector DBs. Trade-off: less sophisticated ANN indexing, but sufficient for personal-scale (thousands, not millions of vectors).
+
+[KEY_POINTS] LangGraph graph-based orchestration, domain subgraphs, intent routing, SSE streaming, pgvector for self-hosted vector search
+[COMMON_MISTAKES] Putting all tools in one agent, not handling state persistence, using WebSockets when SSE suffices
+[FOLLOW_UP] "How do you handle agent failures mid-conversation? What if the intent router misclassifies?"
+[SCORING: 1-5]
+- 3: Can describe the architecture at a high level
+- 5: Explains routing decisions, state management, streaming trade-offs, and why alternatives were rejected

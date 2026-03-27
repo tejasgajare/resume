@@ -30,6 +30,12 @@ on the RAVE platform and Nimble Download systems.
 | managed-ci-workflow-config   | ~/glcp/managed-ci-workflow-config      | CI/CD pipeline configurations                    |
 | mcd-deploy-proj-rave         | ~/glcp/mcd-deploy-proj-rave            | ArgoCD deployment configurations for RAVE        |
 
+### AI / Agents
+
+| Repository              | Path                             | Language   | Description                                              |
+|------------------------|----------------------------------|------------|----------------------------------------------------------|
+| genie-wellness-agent   | ~/glcp/genie-wellness-agent      | Python     | LLM-powered wellness event analysis agent. FastAPI + Gunicorn, multi-cluster K8s (polaris, mira, pavo, aquila, hoku). |
+
 ### Supporting / Reference
 
 | Repository              | Path                          | Language   | Description                                  |
@@ -74,6 +80,13 @@ on the RAVE platform and Nimble Download systems.
 | localdev               | ~/projects/localdev               | Python          | Local MongoDB and PortalDB provisioning scripts. |
 | lucene-search-analysis | ~/projects/lucene-search-analysis | Java            | Lucene/Atlas Search analysis tool (Spring Boot + Vaadin). |
 
+### Sahaya (~/tejasgajare/)
+
+| Repository   | Path                            | Language           | Description                                              |
+|-------------|--------------------------------|--------------------|----------------------------------------------------------|
+| sahaya      | ~/tejasgajare/sahaya           | Python             | AI assistant backend. FastAPI + LangGraph multi-agent + pgvector + Postgres. 18 models, 87 endpoints, 8 connectors. |
+| sahaya-app  | ~/tejasgajare/sahaya-app       | TypeScript (Expo)  | React Native/Expo mobile app. Chat, Tasks, Meals, Wellness, Calendar. |
+
 ### Other Local
 
 | Repository   | Path        | Language       | Description                                       |
@@ -88,9 +101,9 @@ on the RAVE platform and Nimble Download systems.
 
 | Tier         | Repositories                                              |
 |-------------|-----------------------------------------------------------|
-| Very High   | rave-cloud, nimbleDownloadUpdate                          |
-| High        | rave-lvs, ClipStash, kairo                                |
-| Medium      | rave-classic, wellness-proxy, infrastructure repos, surmai |
+| Very High   | rave-cloud, nimbleDownloadUpdate, sahaya                  |
+| High        | rave-lvs, ClipStash, kairo, sahaya-app                    |
+| Medium      | rave-classic, wellness-proxy, genie-wellness-agent, infrastructure repos, surmai |
 | Growing     | crono, chronostore, colimaui, dice                        |
 | Reference   | go-rest-api-example, homefleetRavePlugins, doc-portal     |
 
@@ -99,9 +112,9 @@ on the RAVE platform and Nimble Download systems.
 | Language    | Repositories                                                              |
 |------------|---------------------------------------------------------------------------|
 | Go         | rave-cloud, rave-classic, rave-lvs, nimbleDownloadUpdate, crono, chronostore, surmai, dice, go-rest-api-example, homefleetRavePlugins |
-| Python     | wellness-proxy, localdev                                                  |
+| Python     | sahaya, genie-wellness-agent, wellness-proxy, localdev                    |
 | Swift      | ClipStash, kairo, colimaui                                                |
-| TypeScript | mfe-greenlake-infra, surmai (frontend)                                    |
+| TypeScript | sahaya-app (React Native/Expo), mfe-greenlake-infra, surmai (frontend)    |
 | Java       | lucene-search-analysis                                                    |
 | Helm/YAML  | rave-sops-*, mcd-deploy-proj-rave, managed-ci-workflow-config             |
 | LaTeX/MD   | resume                                                                    |
@@ -135,6 +148,7 @@ HPE GreenLake Cloud Platform
     └── doc-portal (documentation)
 
 Personal Projects
+├── AI: Sahaya (multi-agent assistant: Python backend + React Native app)
 ├── macOS Apps: ClipStash, Kairo, ColimaUI
 ├── Databases: Crono (TSDB), ChronoStore (TSDB), DiceDB (OSS contrib)
 ├── Web: Surmai (travel PWA)
@@ -144,5 +158,5 @@ Personal Projects
 
 ---
 
-*Last updated: 2025*
-*Source: Knowledge graph, local filesystem, GitHub*
+*Last updated: 2026-03-27*
+*Source: Knowledge graph, local filesystem, GitHub (tejasgajare)*

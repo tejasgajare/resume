@@ -35,17 +35,22 @@ and project context.
 - Interface-based dependency injection for testability
 - Custom storage engines (ChronoStore, Crono)
 
-### Python 🔵 Advanced
-**Used for proxy services, automation, and infrastructure scripting.**
+### Python 🟢 Expert
+**Used for AI-agent backends, proxy services, automation, and infrastructure scripting.**
 
 | Project                | Usage                                                  |
 |-----------------------|--------------------------------------------------------|
+| Sahaya Backend        | FastAPI + LangGraph multi-agent orchestrator, 18 SQLAlchemy models, Alembic migrations, pgvector memory |
+| Genie Wellness Agent  | LLM-powered wellness event analysis agent (HPE), FastAPI + Gunicorn, multi-cluster K8s |
 | Wellness Proxy        | FastAPI-based proxy for Nimble/HPE API routing          |
 | LocalDev              | Local MongoDB and PortalDB provisioning scripts         |
 | Infrastructure        | Automation scripts, data processing                     |
 
 **Key patterns:**
-- FastAPI with async endpoints
+- FastAPI with async endpoints and SSE streaming
+- LangGraph/LangChain multi-agent orchestration with domain subgraphs
+- SQLAlchemy ORM + Alembic migrations
+- pgvector for semantic vector search
 - Cross-launch token handling
 - HPA (Horizontal Pod Autoscaler) configuration
 
@@ -65,11 +70,12 @@ and project context.
 - SPM (Swift Package Manager) dependency management
 - Snapshot testing with renderInWindow() helpers
 
-### TypeScript 🟡 Intermediate
-**Frontend development and micro-frontend infrastructure.**
+### TypeScript 🔵 Advanced
+**Mobile and frontend development with React Native/Expo and micro-frontends.**
 
 | Project                | Usage                                                  |
 |-----------------------|--------------------------------------------------------|
+| Sahaya App            | React Native/Expo mobile app — chat, wellness, calendar, tasks |
 | GreenLake Infra MFE   | Micro-frontend infrastructure (27 TS files)            |
 | Surmai                | React frontend for travel PWA                          |
 
@@ -297,7 +303,17 @@ and project context.
 | Tool/Library         | Proficiency | Usage                                     |
 |---------------------|-------------|-------------------------------------------|
 | SendGrid            | 🟡 Intermediate | Email delivery for case creation pipeline |
-| FastAPI             | 🟡 Intermediate | Python proxy service for wellness routing |
+| FastAPI             | 🔵 Advanced     | Python API framework (Sahaya, Genie Wellness Agent, Wellness Proxy) |
+| LangGraph           | 🔵 Advanced     | Multi-agent LLM orchestration (Sahaya backend) |
+| LangChain           | 🔵 Advanced     | LLM application framework (Sahaya backend) |
+| React Native / Expo | 🔵 Advanced     | Cross-platform mobile development (Sahaya App) |
+| SQLAlchemy + Alembic| 🟡 Intermediate | Python ORM + migrations (Sahaya backend)  |
+| pgvector            | 🟡 Intermediate | PostgreSQL vector similarity search (Sahaya memory) |
+| Redis               | 🟡 Intermediate | Caching and real-time features (Sahaya)   |
+| Gemini              | 🟡 Intermediate | Google AI model for agent intelligence    |
+| Cloudflare Tunnel   | 🟡 Intermediate | Secure service exposure (Sahaya deployment) |
+| K3s                 | 🟡 Intermediate | Lightweight K8s for edge/ARM (Raspberry Pi) |
+| SSE                 | 🟡 Intermediate | Server-Sent Events for LLM streaming      |
 | GRDB                | 🔵 Advanced     | SQLite wrapper for Swift (ClipStash)      |
 | Vaadin              | ⚪ Familiar      | Java web framework (Lucene Search tool)   |
 | Colima              | 🔵 Advanced     | macOS container runtime (Docker alternative) |
@@ -309,12 +325,12 @@ and project context.
 
 | Level          | Technologies                                                          |
 |----------------|-----------------------------------------------------------------------|
-| 🟢 Expert      | Go, MongoDB, Kubernetes, JWT, Git                                    |
-| 🔵 Advanced    | Python, Swift, Docker, Helm, Istio, AWS, Kafka, Prometheus, Grafana, ESO, SwiftUI, SQLite, GRDB, GitHub Actions |
-| 🟡 Intermediate | TypeScript, Java, Rust, Terraform, ArgoCD, React, Humio, PagerDuty, SOPS, SonarQube, SendGrid, FastAPI, Tauri, Colima |
+| 🟢 Expert      | Go, Python, MongoDB, Kubernetes, JWT, Git                            |
+| 🔵 Advanced    | TypeScript, Swift, Docker, Helm, Istio, AWS, Kafka, Prometheus, Grafana, ESO, SwiftUI, SQLite, GRDB, GitHub Actions, FastAPI, LangGraph, LangChain, React Native/Expo |
+| 🟡 Intermediate | Java, Rust, Terraform, ArgoCD, React, Humio, PagerDuty, SOPS, SonarQube, SendGrid, Tauri, Colima, SQLAlchemy, pgvector, Redis, Gemini, Cloudflare Tunnel, K3s, SSE |
 | ⚪ Familiar     | C#, T-SQL, C++, SQL Server, Vault, New Relic, PocketBase, Vaadin     |
 
 ---
 
-*Last updated: 2025*
-*Source: Knowledge graph, codebase analysis, resume*
+*Last updated: 2026-03-27*
+*Source: Knowledge graph, codebase analysis, resume (tejasgajare)*

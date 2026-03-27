@@ -341,3 +341,100 @@ Each role deepened my understanding. Yardi taught me database reliability matter
 [SCORING: 1-5]
 - 3: Can describe each infrastructure
 - 5: Shows progression, contrasts operational lessons, connects experiences
+
+---
+
+## 11. AI Agent Architecture: Sahaya vs Genie Wellness Agent
+
+### Question
+"You've built two LLM-powered agent systems — Sahaya (personal) and the Genie Wellness Agent (HPE). Compare the architecture, design decisions, and trade-offs."
+
+### Expected Answer
+| Aspect | Sahaya | Genie Wellness Agent |
+|--------|--------|---------------------|
+| Framework | LangGraph (multi-agent with domain subgraphs) | Custom FastAPI + LLM prompts |
+| Agent model | Multi-agent with intent routing | Single-purpose agent with specialized prompts |
+| LLM | Gemini | LLM (via HPE infra) |
+| Memory | pgvector semantic search + keyword fallback | Stateless (per-request) |
+| Deployment | Docker Compose on Raspberry Pi ARM64 | Multi-cluster K8s (5 clusters) |
+| Scale | Single user, self-hosted | Enterprise, multi-cluster |
+| Streaming | SSE for real-time responses | Synchronous responses |
+
+**Key insight**: Sahaya needed multi-agent coordination (chat, tasks, meals, calendar, wellness — each with different tools). Genie was single-purpose (wellness event analysis) so a simpler architecture with well-tuned prompts was more appropriate. Over-engineering with LangGraph would have added latency without benefit for Genie's focused use case.
+
+[FOLLOW_UP] "When would you choose multi-agent vs single-agent architecture?"
+[SCORING: 1-5]
+- 3: Can describe both systems
+- 5: Articulates why different architectures suited different problems, discusses trade-offs
+
+---
+
+## 12. Deployment Spectrum: K8s at Scale vs Raspberry Pi
+
+### Question
+"You deploy RAVE to enterprise Kubernetes clusters with Istio and ArgoCD, but you also deploy Sahaya to a Raspberry Pi. Compare these deployment experiences."
+
+### Expected Answer
+| Aspect | RAVE (Enterprise K8s) | Sahaya (Raspberry Pi) |
+|--------|----------------------|----------------------|
+| Orchestration | K8s + Istio + ArgoCD + HPA | Docker Compose (simplified from K3s) |
+| Networking | Istio VirtualService, RequestAuthentication | Cloudflare Tunnel |
+| Secrets | ESO → AWS Parameter Store | .env file + Docker secrets |
+| CI/CD | GitHub Actions + SonarQube + ArgoCD GitOps | `make ship` (build + push + deploy) |
+| Scale | HPA auto-scaling, multi-cluster | Single instance, ARM64 |
+| Monitoring | Prometheus + Grafana + PagerDuty | Docker logs |
+
+**Key lesson**: I initially tried K3s on the Pi (cargo-culting enterprise patterns). K3s worked but added unnecessary complexity — restarts took 2+ minutes, resource usage was high. Docker Compose + Cloudflare tunnel achieved the same result with 10x simpler operations. The lesson: match infrastructure complexity to actual requirements.
+
+[FOLLOW_UP] "What made you switch from K3s to Docker Compose? At what scale would you switch back?"
+[SCORING: 1-5]
+- 3: Can describe both environments
+- 5: Shows judgment about when to simplify vs when to use full orchestration
+
+---
+
+## 13. FastAPI Across Projects: Wellness Proxy vs Sahaya vs Genie
+
+### Question
+"You've used FastAPI in three different contexts — the Wellness Proxy, Sahaya backend, and Genie Wellness Agent. How did your usage evolve?"
+
+### Expected Answer
+1. **Wellness Proxy**: Simple routing proxy — async endpoints forwarding requests to Nimble/HPE APIs. Cross-launch token handling. Minimal — ~20 files.
+2. **Genie Wellness Agent**: LLM-powered API — FastAPI + Gunicorn serving AI analysis endpoints. Custom prompts, MCP tools integration. Medium complexity.
+3. **Sahaya**: Full application — app factory pattern, SQLAlchemy ORM integration, Alembic migrations, SSE streaming endpoints, WebSocket support, dependency injection for repos, 87+ endpoints.
+
+**Evolution**: Proxy → AI agent API → full application framework. Each use pushed me to learn deeper FastAPI patterns: from basic routing to async SQLAlchemy sessions, SSE streaming generators, and middleware chains.
+
+[FOLLOW_UP] "What's the most advanced FastAPI pattern you've used?"
+[SCORING: 1-5]
+- 3: Can describe each project's FastAPI usage
+- 5: Shows clear progression and deeper patterns learned at each stage
+
+---
+
+## 14. Performance Debugging: RAVE Case Creation vs System Design
+
+### Question
+"Walk me through the case creation performance investigation. If you were designing this system from scratch, how would you prevent the P90 degradation?"
+
+### Expected Answer
+**Investigation**: P90 went from 8.8s (1 user) to 41.3s (10 concurrent). I broke down the pipeline:
+- WellnessProducer: 24ms (<1%) — not the bottleneck
+- Kafka transit: 657ms — reasonable
+- WellnessManagement: dominant — sequential processing, single Kafka partition
+
+**Root cause**: All Kafka messages went to the same partition (default key hashing). crmRelay consumers couldn't parallelize.
+
+**Fix**: Used updatedMetadata.UUID as partition key → even distribution → horizontal scaling.
+
+**If designing from scratch**: 
+1. Explicit partition strategy from day one (hash on case ID or tenant)
+2. Rate limiting per tenant at the API gateway
+3. Async acknowledgment pattern (accept request, return ID, process asynchronously)
+4. Circuit breaker on CRM calls to prevent cascade failures
+5. Pre-allocated consumer groups sized for expected concurrency
+
+[FOLLOW_UP] "What if the CRM downstream is the bottleneck, not Kafka?"
+[SCORING: 1-5]
+- 3: Can describe the investigation
+- 5: Connects to system design principles, proposes preventive architecture

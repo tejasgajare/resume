@@ -370,6 +370,25 @@ func detectAPIVersion(r *http.Request) APIVersion {
 
 ---
 
+### v2beta1 glp:manual Event Exclusion
+
+**Requirement**: Documents with `origin: "glp:manual"` must be excluded from all v2beta1 wellness API responses, without affecting v2 or v2beta2.
+
+**Approach**: DB-level filter injection in v2beta1-exclusive methods.
+- Key insight: all 6 DB methods called by v2beta1 read endpoints are exclusive to v2beta1 — none shared with v2/v2beta2
+- Added `origin != "glp:manual"` filter directly in these DB methods
+- Safe modification with zero cross-version impact
+
+### OData `in` Operator for caseNumber Filter
+
+**Requirement**: Platform Co-pilot needs to fetch groups of support cases by multiple case IDs in one request.
+- `in` operator was already fully supported in OData infrastructure (`tree.In` in `supportedOperators`)
+- Maps to MongoDB `$in` via `inOperatorFilter()` which handles collections
+- Only needed to add the mapping in the filter configuration — no new code required
+- Updated OpenAPI documentation accordingly
+
+---
+
 ## [KEY_POINTS]
 
 - URL-based versioning: /v1/, /v2/, /v3/ with explicit routing

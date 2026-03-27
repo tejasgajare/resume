@@ -331,6 +331,16 @@ Snapshot testing with swift-snapshot-testing. I built a renderInWindow helper th
 
 ---
 
+### Key Development Patterns (from MEMORY.md)
+
+- **Panel content refresh**: Content view MUST be recreated on each `show()` call, not cached. `.onAppear` only fires once if the panel is reused — this was a subtle bug that took significant debugging.
+- **Settings alignment**: Don't add `.padding()` on top of `.formStyle(.grouped)` — the grouped form already provides internal spacing. Double padding clips content.
+- **Snapshot testing**: Use `renderInWindow()` helper — host SwiftUI views in a real NSWindow with RunLoop pumping for `.onAppear`/state updates to process. Set `window.appearance` for consistent dark/light mode. Use `bitmapImageRepForCachingDisplay` + `cacheDisplay` for accurate captures.
+- **Test target → executable target**: In Swift 5.9+/SPM, the test target can depend on the executable target — `@main` is handled correctly.
+- **Workflow**: After any code edits, run `./scripts/install-local.sh` to build and install to `/Applications/ClipStash.app`.
+
+---
+
 ## Cross-References
 
 - See [Nimble Download → Global Trade Compliance](../nimble-download/global-trade-compliance.md) for my SQLite expertise in a different context

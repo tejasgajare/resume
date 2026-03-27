@@ -362,6 +362,19 @@ Grafana dashboards are for **visualization only** — no alerting from Grafana p
 
 ---
 
+### Prometheus Metrics for crmService (GLCP-331718)
+
+**Problem**: CRM case creates/updates were tracked only via Kibana/Elasticsearch log queries. Needed equivalent visibility in Grafana/Prometheus, but crmService had zero Prometheus instrumentation.
+
+**Design Decision**: Single dedicated counter `mc_event_crm_total` with `action` label:
+- Covers all crmService outcomes: create, update, error
+- Avoids confusion with wellnessManagement's `mc_event_case_action_total` (different metric name)
+- Clean Grafana dashboards with single metric, filtered by action label
+
+**Also**: Removed obsolete metricCollector from rave-classic (GLCP-335930) — build and deployment configurations cleaned up.
+
+---
+
 ## [KEY_POINTS]
 
 - Consolidated 8+ fragmented metrics into single `mc_event_case_action_total` with labels

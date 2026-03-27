@@ -457,6 +457,24 @@ For CRM cases, attachments are added to the CRM case via the DCM API after uploa
 
 ---
 
+### Office XML Validation Fix (GLCP-340302, GLCP-339197)
+
+**Bug**: .xlsx, .docx, .pptx files were rejected despite being supported formats.
+- Error: `file content detected as 'application/zip' (archive) is not compatible with extension '.xlsx'`
+- Root cause: Office Open XML formats are internally ZIP archives
+- `http.DetectContentType` correctly identifies them as `application/zip`
+- `extensionCategoryCompat` had no entry for `.xlsx`, `.docx`, `.pptx`
+- The reverse check's else-branch rejected any extension not explicitly mapped
+
+**Fix**: 
+- Added explicit Office XML magic-byte verification in `ValidateFileContent()`
+- Added extensionCategoryCompat mappings for all Office Open XML extensions
+- Also fixed empty file upload validation (GLCP-339197)
+
+**Interview insight**: This is a great example of understanding file format internals. Office Open XML is a ZIP container with XML manifests inside — knowing that ZIP is the container format is crucial for correct content-type validation.
+
+---
+
 ## [KEY_POINTS]
 
 - 6-layer defense-in-depth: size → filename → extension → content-type → S3 upload → lifecycle tracking

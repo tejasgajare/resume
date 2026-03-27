@@ -117,3 +117,36 @@
 
 [KEY_POINTS] Always quantify. "Several" → "13+". "Many services" → "20+ microservices". "Faster" → "96% reduction".
 [COMMON_MISTAKES] Making up numbers; using vague quantifiers; not connecting numbers to business impact.
+
+---
+
+## Recent Metrics (March 2026)
+
+### Performance & Reliability
+
+| Metric | Value | Context |
+|--------|-------|---------|
+| Case creation P90 investigated | 8.8s → 41.3s (10 users) | Root-caused to single Kafka partition |
+| Kafka partition fix | Even distribution | Used UUID-based keys for crmRelay scaling |
+| Test coverage pushed | 76→80% (WM), 73→80% (HC) | Targeted pipeline function tests |
+| Security vuln fixed | JWT issuer bypass | JWKS cache scoped by issuer+kid |
+| Attachment bug fixed | Office XML (.xlsx/.docx/.pptx) | Magic-byte verification added |
+| Prometheus metrics added | mc_event_crm_total | crmService now observable in Grafana |
+| Docker Compose consolidation | 3 services → 1 compose file | Resolved port conflicts, unified local dev |
+
+### Sahaya AI Assistant (Personal Project)
+
+| Metric | Value | Context |
+|--------|-------|---------|
+| Backend models | 18 SQLAlchemy models | Full data model from scratch |
+| REST endpoints | 87 planned | 11 domain areas |
+| LangGraph agents | 5+ domain subgraphs | Chat, tasks, meals, calendar, wellness |
+| Connectors | 8 | Google Calendar, Gmail, Outlook, Apple Health, etc. |
+| Build phases | 9 completed | ~2 weeks from zero to deployed |
+| Deployment | Raspberry Pi ARM64 | Docker Compose + Cloudflare Tunnel |
+| Backend migration | Go+gRPC → Python/LangGraph | Better LLM orchestration ecosystem |
+
+### In Updated "Tell Me About Yourself"
+> "Most recently, I investigated a case creation performance regression, tracing P90 times from 8.8s to 41s through pipeline analysis and fixing Kafka partition distribution. I also built a personal AI assistant from scratch — a multi-agent LangGraph backend with React Native mobile app, deployed on a Raspberry Pi."
+
+[KEY_POINTS] Sahaya demonstrates end-to-end ownership, AI/ML skills, and systems thinking beyond the day job.
