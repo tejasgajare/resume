@@ -74,10 +74,10 @@
 \section{Skills}
 \begin{itemize}[leftmargin=0.15in, label={}, nosep, itemsep=1pt]
   \item \textbf{Languages:} Go, Python, C++, Java, SQL, JavaScript, TypeScript, Swift
-  \item \textbf{Backend \& Cloud:} REST APIs, gRPC, Microservices, Kubernetes, Istio, Docker, Consul, AWS (ECS, Fargate, RDS), PagerDuty
-  \item \textbf{Web:} React, Vue.js, HTML/CSS, Angular
-  \item \textbf{Frameworks \& Tools:} Spring Boot, Django, Flask, Git, CI/CD, TensorFlow
-  \item \textbf{Databases:} PostgreSQL, MongoDB, Microsoft SQL Server, SQLite, Firebase
+  \item \textbf{Backend \& Cloud:} REST APIs, gRPC, Microservices, Kubernetes, Istio, Helm, ArgoCD, Docker, AWS (ECS, S3, IAM), Kafka, Terraform
+  \item \textbf{Observability \& CI/CD:} Prometheus, Grafana, PagerDuty, Humio/LogScale, GitHub Actions, SonarQube
+  \item \textbf{AI / Frameworks:} LangChain, FastAPI, Spring Boot, Flask, React, Vue.js, Git
+  \item \textbf{Databases:} MongoDB, PostgreSQL, Microsoft SQL Server, SQLite, Redis
 \end{itemize}
 
 %-----------EXPERIENCE-----------
@@ -86,12 +86,13 @@
 \resumeSubheading
   {Hewlett Packard Enterprise}{Cloud Developer III}{San Jose, CA}{July 2023 -- Present}
 \begin{itemize}[leftmargin=0.15in, nosep, itemsep=2pt, topsep=3pt]
-  \item Architected and implemented a multi-tenant \textbf{Case Creation system} with workspace-based tenant isolation, addressing security-critical workflows including cross-tenant access prevention, server-side input validation, and file upload sanitization
-  \item Designed and built \textbf{v3 Wellness Producer APIs} with token-based auth middleware, Istio service mesh configuration, and workspace-based tenant isolation for the HPE GreenLake Cloud Platform
+  \item Architected and implemented a multi-tenant \textbf{Case Creation system} with workspace-based tenant isolation, addressing security-critical workflows including cross-tenant access prevention, server-side input validation, and \textbf{file upload sanitization} with magic-byte verification for 60+ content types including Office Open XML formats
+  \item Designed and built \textbf{v3 Wellness Producer APIs} with JWT auth middleware, Istio service mesh configuration, and workspace-based tenant isolation for the HPE GreenLake Cloud Platform; evolved API through 3 major versions
+  \item Investigated \textbf{case creation P90 degradation} (8.8s $\rightarrow$ 41.3s at 10 concurrent users) through 30-day pipeline stage analysis; resolved by implementing \textbf{Kafka partition key distribution} for horizontal crmRelay consumer scaling
+  \item Fixed \textbf{JWT issuer validation vulnerability} where JWKS cache allowed cross-issuer token acceptance; scoped cache entries by issuer+kid pair and enforced normalized HTTPS base URL prefix matching
+  \item Built \textbf{observability platform} with Prometheus metrics, Grafana dashboards, and automated PagerDuty/Slack alerting; instrumented crmService with \texttt{mc\_event\_crm\_total} counter for end-to-end case lifecycle visibility
   \item Developed a \textbf{Go-based download middleware} for enforcing global trade compliance on software downloads, integrating IP-geolocation and account validation with SQLite caching to reduce redundant API calls by 60\%+
-  \item Built \textbf{Rave Monitoring} cloud alerting system tracking service health, case creation pipelines, and CRM failures with automated Slack and PagerDuty notifications for production incident response
-  \item Implemented CRM relay attachment retry logic for handling race conditions where attachments arrive before case number assignment
-  \item Managed production \textbf{Kubernetes cluster operations} including custom service account provisioning, Istio configuration, and deployment pipelines
+  \item Managed production \textbf{Kubernetes cluster operations} across 3 environments with Helm charts, ArgoCD GitOps deployments, and SOPS/ESO secrets management for 20+ microservices
 \end{itemize}
 
 \resumeSubheadingSimple
@@ -119,16 +120,15 @@
 %-----------PROJECTS-----------
 \section{Projects}
 
-\projectHeading{Crono --- Time Series Vector Database}{Go}
+\projectHeading{Genie Wellness Agent --- LLM-Powered Support Triage}{Python, FastAPI, LangChain}
 \begin{itemize}[leftmargin=0.15in, nosep, itemsep=2pt, topsep=3pt]
-  \item Building a time series database in Go with custom storage engine, vector indexing, state management, and REST API layer
-  \item Designed modular architecture with separate packages for API server, indexing, state management, storage engine, and vector operations
+  \item Built an \textbf{AI agent} for automated wellness event analysis and support case triage using LLM prompts and MCP tools; deployed across 5 Kubernetes clusters with per-cluster configuration
+  \item Optimized agent prompts for deterministic responses, summary generation, and follow-up question quality
 \end{itemize}
 
-\projectHeading{Kairo --- macOS Menu Bar Calendar}{Swift, SwiftUI}
+\projectHeading{Sprint Automation Skills --- AI-Powered Developer Tools}{Python, Jira/Confluence APIs}
 \begin{itemize}[leftmargin=0.15in, nosep, itemsep=2pt, topsep=3pt]
-  \item Built a native macOS menu bar calendar widget using SwiftUI with EventKit integration and real-time weather display via Open-Meteo API
-  \item Implemented clean MVVM architecture with dedicated service and model layers for calendar events and weather data
+  \item Created \textbf{Copilot CLI skills} that auto-generate sprint review Confluence pages with burndown charts, Jira Smart Links, and status lozenges; and batch-transition sprint issues to Assigned status
 \end{itemize}
 
 %-----------EDUCATION-----------
