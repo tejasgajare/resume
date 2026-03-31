@@ -5,7 +5,6 @@
 
 \documentclass[letterpaper,10pt]{article}
 
-\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[margin=0.45in, top=0.4in, bottom=0.4in]{geometry}
@@ -27,7 +26,7 @@
 }
 
 % Section formatting
-\titleformat{\section}{\large\bfseries\scshape}{}{0em}{}[\titlerule]
+\titleformat{\section}{\normalfont\large\scshape}{}{0em}{}[\titlerule]
 \titlespacing*{\section}{0pt}{4pt}{2pt}
 
 % Remove page numbers
@@ -35,27 +34,27 @@
 
 % Custom commands
 \newcommand{\resumeSubheading}[4]{
-  \vspace{-1pt}\noindent
+  \vspace{8pt}\noindent
   \begin{tabularx}{\textwidth}{@{}X r@{}}
     \textbf{#1}, \textit{#2} & \textit{\small #3, #4}
   \end{tabularx}
-  \vspace{-5pt}
+  \vspace{-8pt}
 }
 
 \newcommand{\resumeSubheadingSimple}[3]{
-  \vspace{-1pt}\noindent
+  \vspace{8pt}\noindent
   \begin{tabularx}{\textwidth}{@{}X r@{}}
     \textbf{#1}, \textit{#2} & \textit{\small #3} \\
   \end{tabularx}
-  \vspace{-5pt}
+  \vspace{-8pt}
 }
 
 \newcommand{\projectHeading}[2]{
-  \vspace{-1pt}\noindent
+  \vspace{8pt}\noindent
   \begin{tabularx}{\textwidth}{@{}X r@{}}
     \textbf{#1} & \textit{\small #2} \\
   \end{tabularx}
-  \vspace{-5pt}
+  \vspace{-8pt}
 }
 
 \begin{document}
@@ -71,9 +70,9 @@
 
 %-----------SKILLS-----------
 \section{Skills}
-\begin{itemize}[leftmargin=0.15in, label={}, nosep, itemsep=1pt]
+\begin{itemize}[leftmargin=0.15in, label={}, nosep, itemsep=3pt]
   \item \textbf{Languages:} Go, Python, C++, Java, SQL, JavaScript, TypeScript, Swift
-  \item \textbf{Backend \& Cloud:} REST APIs, gRPC, Microservices, Kubernetes, Istio, Helm, ArgoCD, Docker, AWS (ECS, S3, IAM), Kafka, Terraform
+  \item \textbf{Backend \& Cloud:} REST/gRPC, Microservices, Kubernetes, Istio, Helm, ArgoCD, Docker, AWS, Kafka, Terraform
   \item \textbf{Observability \& CI/CD:} Prometheus, Grafana, PagerDuty, Humio/LogScale, GitHub Actions, SonarQube
   \item \textbf{AI / Frameworks:} LangChain, FastAPI, Spring Boot, Flask, React, Vue.js, Git
   \item \textbf{Databases:} MongoDB, PostgreSQL, Microsoft SQL Server, SQLite, Redis
@@ -84,32 +83,33 @@
 
 \resumeSubheading
   {Hewlett Packard Enterprise}{Cloud Developer III}{San Jose, CA}{Jul 2023 -- Present}
-\begin{itemize}[leftmargin=0.15in, nosep, itemsep=1pt, topsep=2pt]
-  \item Architected a multi-tenant \textbf{Case Creation system} with workspace-based tenant isolation, cross-tenant access prevention, input validation, and \textbf{file upload sanitization} with magic-byte verification for 60+ content types
-  \item Designed and built \textbf{v3 Wellness Producer APIs} with JWT auth middleware, Istio service mesh, and workspace-based tenant isolation for HPE GreenLake Cloud Platform
-  \item Investigated \textbf{case creation P90 degradation} (8.8s $\rightarrow$ 41.3s at 10 concurrent users) via 30-day pipeline analysis; resolved with \textbf{Kafka partition key distribution} for horizontal consumer scaling
-  \item Fixed \textbf{JWT issuer validation vulnerability} where JWKS cache allowed cross-issuer token acceptance; scoped cache by issuer+kid pair with HTTPS base URL prefix matching
-  \item Built \textbf{observability platform} with Prometheus metrics, Grafana dashboards, and PagerDuty/Slack alerting; instrumented crmService for end-to-end case lifecycle visibility
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=3pt, topsep=0pt]
+  \item Architected a \textbf{multi-tenant support case system} with tenant isolation, access control, input validation, and \textbf{file upload sanitization} with magic-byte verification for 60+ content types
+  \item Designed and built \textbf{case ingestion APIs} (v3) with JWT auth middleware, Istio service mesh, and tenant isolation for HPE GreenLake cloud platform
+  \item Diagnosed \textbf{API P90 latency regression} (8.8s $\rightarrow$ 41.3s at 10 concurrent users) through metrics analysis; resolved with \textbf{Kafka partition key distribution} for horizontal consumer scaling
+  \item Fixed \textbf{JWT validation vulnerability} where JWKS cache allowed cross-issuer token acceptance; scoped cache by issuer+kid pair with URL prefix matching
+  \item Built \textbf{observability platform} with Prometheus, Grafana dashboards, and PagerDuty/Slack alerting; instrumented CRM integration service for end-to-end case lifecycle visibility
   \item Developed \textbf{Go-based download middleware} enforcing global trade compliance via IP-geolocation and account validation with SQLite caching, reducing redundant API calls by 60\%+
-  \item Managed \textbf{Kubernetes operations} across 3 environments with Helm charts, ArgoCD GitOps, and SOPS/ESO secrets for 20+ microservices
+  \item Managed \textbf{Kubernetes} across 3 environments with Helm, ArgoCD GitOps, and SOPS/ESO secrets for 20+ microservices
 \end{itemize}
 
 \resumeSubheadingSimple
   {Hewlett Packard Enterprise}{Software Engineer Intern}{May -- Aug 2022}
-\begin{itemize}[leftmargin=0.15in, nosep, itemsep=1pt, topsep=2pt]
-  \item Enhanced Go-based REST APIs to HPE standards, improving microservice interoperability; modularized CI/CD pipeline reducing build time by \textbf{96\%}
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=3pt, topsep=0pt]
+  \item Updated Wellness REST APIs to HPE standards with OData V4 filter support, improving microservice interoperability
+  \item Modularized Go monorepo into individual service builds, reducing CI/CD build time by \textbf{96\%}
 \end{itemize}
 
 \resumeSubheading
   {Grouped}{Full Stack Developer}{Syracuse, NY}{Jan -- Apr 2022}
-\begin{itemize}[leftmargin=0.15in, nosep, itemsep=1pt, topsep=2pt]
-  \item Designed three-tier, multi-AZ infrastructure with Spring Boot and Flask on AWS ECS/Fargate with 5 horizontally scaled instances
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=3pt, topsep=0pt]
+  \item Designed three-tier, multi-AZ infrastructure with Spring Boot and Flask on AWS ECS/Fargate with 5 auto-scaled instances
   \item Utilized server-side rendering to decrease page load time by \textbf{35\%}
 \end{itemize}
 
 \resumeSubheading
   {Yardi}{Software Engineer}{Pune, India}{Aug 2019 -- Apr 2021}
-\begin{itemize}[leftmargin=0.15in, nosep, itemsep=1pt, topsep=2pt]
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=3pt, topsep=0pt]
   \item Designed \textbf{CCPA \& GDPR compliance} data scrubbing tool handling complex hierarchical database relationships using T-SQL, reducing field selection time by \textbf{50\%}
   \item Developed Harbor Management System using ASP.NET and Microsoft SQL Server for lease tracking
 \end{itemize}
@@ -118,13 +118,13 @@
 \section{Projects}
 
 \projectHeading{Genie Wellness Agent --- LLM-Powered Support Triage}{Python, FastAPI, LangChain}
-\begin{itemize}[leftmargin=0.15in, nosep, itemsep=1pt, topsep=2pt]
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=3pt, topsep=0pt]
   \item Built an \textbf{AI agent} for automated wellness event analysis and support case triage using LLM prompts and MCP tools; deployed across 5 Kubernetes clusters with per-cluster configuration
   \item Optimized agent prompts for deterministic responses, summary generation, and follow-up question quality
 \end{itemize}
 
 \projectHeading{Sprint Automation --- AI-Powered Developer Tools}{Python, Jira/Confluence APIs}
-\begin{itemize}[leftmargin=0.15in, nosep, itemsep=1pt, topsep=2pt]
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=3pt, topsep=0pt]
   \item Created \textbf{Copilot CLI skills} that auto-generate sprint review Confluence pages with burndown charts and Jira Smart Links; batch-transition sprint issues to Assigned status
 \end{itemize}
 
@@ -133,13 +133,13 @@
 
 \resumeSubheadingSimple
   {Syracuse University}{M.S. Computer Science}{Aug 2021 -- May 2023}
-\begin{itemize}[leftmargin=0.15in, nosep, itemsep=1pt, topsep=2pt]
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=3pt, topsep=0pt]
   \item Coursework: NLP, Data Mining, Cryptography, Blockchain, Design \& Analysis of Algorithms
 \end{itemize}
 
 \resumeSubheadingSimple
   {Savitribai Phule Pune University}{B.E. Computer Engineering}{May 2015 -- May 2019}
-\begin{itemize}[leftmargin=0.15in, nosep, itemsep=1pt, topsep=2pt]
+\begin{itemize}[leftmargin=0.15in, nosep, itemsep=3pt, topsep=0pt]
   \item Finalist --- ACM ICPC Asia Regionals 2019 \enspace$|$\enspace Ranked 6th nationally --- ABU Robocon 2017
 \end{itemize}
 
